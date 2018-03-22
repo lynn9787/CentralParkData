@@ -2,6 +2,7 @@
 000200180322       Ctl-Opt DftActGrp(*No);
 000300180322       Dcl-S Date            Date            Inz(*SYS);
 000400180322       // new change
+                   // new line added from GIT Hub source editor.
 000900180322       // ===========================================
 001000180322     D @charA          S              8    inz('04/12/01')
 001100180322     D @charB          S             10    inz('12/02/2004')
