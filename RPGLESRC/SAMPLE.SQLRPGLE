@@ -2,6 +2,7 @@
 000101180322       Ctl-Opt DftActGrp(*No);
 000102180322       Dcl-S Date            Date            Inz(*SYS);
 000103180322       // Changes made
+                    //making more changes but in git hub
 000104180322       // ===========================================
 000105180322     D @charA          S              8    inz('04/12/01')
 000106180322     D @charB          S             10    inz('12/02/2004')
