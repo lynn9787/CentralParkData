@@ -2,6 +2,7 @@
 000101180322       Ctl-Opt DftActGrp(*No);
 000102180322       Dcl-S Date            Date            Inz(*SYS);
 000103180322       // Changes made
+<<<<<<< HEAD
 000104180322       //new changes
 000105180322       // ===========================================
 000106180322     D @charA          S              8    inz('04/12/01')
@@ -142,6 +143,149 @@
 000241180322       Dcl-S JGREG           Packed(12:9);
 000242180322       Dcl-S J$YYWK          Packed(3:0);
 000243180322       Dcl-S J$TST           Packed(9:9);
+=======
+                    //making more changes but in git hub
+000104180322       // ===========================================
+000105180322     D @charA          S              8    inz('04/12/01')
+000106180322     D @charB          S             10    inz('12/02/2004')
+000107180322     D @charC          S              8    inz('12/03/04')
+000108180322
+000109180322     D @dateA          S               d   inz(D'2004-12-04')
+000110180322
+000111180322     D @numA           S              6  0 inz(041205)
+000112180322     D @numB           S              7  0 inz(1041206)
+000113180322     D @numC           S              8  0 inz(20041207)
+000114180322     D @numD           S              6  0 inz(120804)
+000115180322     D @numE           S              8  0 inz(12092004)
+000116180322
+000117180322        Dcl-Ds *n;
+000118180322         NUM83           Zoned(8:3);
+000119180322         Aint5           Zoned(5:0)      OVERLAY(NUM83);
+000120180322         Aint4           Zoned(4:0)      OVERLAY(NUM83:2);
+000121180322         Adec2           Zoned(2:0)      OVERLAY(NUM83:6);
+000122180322       End-Ds;
+000123180322
+000124180322       Dcl-Ds *n;
+000125180322         NUM62           Zoned(6:2);
+000126180322         Bint4           Zoned(4:0)      OVERLAY(NUM62);
+000127180322         Bdec2           Zoned(2:0)      OVERLAY(NUM62:5);
+000128180322       End-Ds;
+000129180322
+000130180322      /free
+000131180322       // *********************************************************************
+000132180322           Initialize();
+000133180322       //      If AYR > SIXYR;
+000134180322       //            X = 0;
+000135180322       //
+000136180322 7     //            For X = 1 To 6;
+000137180322       //              *IN58 = '0';
+000138180322       //              X = %Lookup(AYR : YR : X);
+000139180322       //              *IN58 = (X > 0);
+000140180322       //              If X = 0;
+000141180322       //                X = 1;
+000142180322       //              EndIf;
+000143180322       //              ENDFOR;
+0001441803228      //              If *IN58 = '1';
+000145180322       //              ENDIF;
+000146180322       //     ENDIF;
+000147180322
+000148180322       //BECOMES THIS EASIER CODE TO READ
+000149180322              If AYR > SIXYR;
+000150180322                   X = 0;
+000151180322
+000152180322                   For X = 1 To 6;
+000153180322                    if %Lookup(AYR : YR : X) > 0;
+000154180322                    ENDIF;
+000155180322                   ENDFOR;
+000156180322              ENDIF;
+000157180322         *inlr = *on;
+000158180322       Dcl-Proc Initialize;
+000159180322       //  WMM = %Dec(%Subst(%EditC(DATE:'X'):
+000160180322       //          1:2):2:0);
+000161180322       //  WDD = DATE / 100;
+000162180322       //  WYY = %Dec(%Subst(%EditC(DATE:'X'):
+000163180322       //          5:2):2:0);
+000164180322         WMM = %Dec(%Subst(%EditC(DATE:'X'):
+000165180322                 1:2):2:0);
+000166180322         WDD = %Dec(%Subst(%EditC(DATE:'X'):
+000167180322                 3:2):2:0);
+000168180322         WYY = %Dec(%Subst(%EditC(DATE:'X'):
+000169180322                 5:2):2:0);
+000170180322
+000171180322       If user = 'KELLYM';
+000172180322         IPaddress = '10.1.24.125';
+000173180322       EndIf;
+000174180322
+000175180322       rtn = XLS_Visible(SQL_Socket:1);
+000176180322        In *LOCK fastenctr;
+000177180322         //WKCTR = fastenctr + 1;
+000178180322         //If wkctr = 0;
+000179180322         //  wkctr = wkctr + 1;
+000180180322         //  fastenctr = WKCTR;
+000181180322         //Else;
+000182180322         //  fastenctr = WKCTR;
+000183180322         //EndIf;
+000184180322        MONITOR;
+000185180322            WKCTR = fastenctr + 1;
+000186180322        ON-ERROR;
+000187180322           WKCTR = 01;
+000188180322        ENDMON;
+000189180322           fastenctr = WKCTR;
+000190180322        Out fastenctr;
+000191180322
+000192180322        rtn = XLS_Visible(SQL_Socket:1);
+000193180322       If user = 'KELLYM';
+000194180322         IPaddress = '10.1.24.125';
+000195180322       EndIf;
+000196180322
+000197180322       //PRIMARY FILES
+000198180322       SETLL *LOVAL ACTMP1;
+000199180322       READ ACTMP1;
+000200180322       DOU %EOF(ACTMP1);
+000201180322
+000202180322       READ ACTMP1;
+000203180322       ENDDO;
+000204180322       *INLR = '1';
+000205180322
+000206180322       End-Proc;
+000207180322
+000208180322      //*************************************************************************************
+000209180322       Dcl-Proc L1PRIMARY;
+000210180322       //PRIMARY FILES WITH L1 BREAKS
+000211180322       Dcl-S SAVSLSCNR       LIKE(SLSCNR);
+000212180322       Dcl-S SAVSLSCNR2      LIKE(SLSCNR);
+000213180322
+000214180322       SETLL *LOVAL ACTMP1;
+000215180322       READ ACTMP1;
+000216180322       SAVXLCNCD = XLCNCD;
+000217180322       DOU %EOF(ACTMP1);
+000218180322        IF XLCNCD <> SAVXLCNCD;
+000219180322         SAVXLCNCD2 = XLCNCD;
+000220180322         XLCNCD = SAVXLCNCD;
+000221180322         READP ACTMP1;             //READ THE PRIOR RECORD TO PROCESS THE LEVEL BREAK
+000222180322         EXSR L1;
+000223180322         SAVXLCNCD = SAVXLCNCD2;
+000224180322         XLCNCD = SAVXLCNCD2;
+000225180322         READ ACTMP1;             //READ THE NEXT RECORD TO GET BACK TO THE CORRECT RECORD AGAIN
+000226180322       ENDIF;
+000227180322
+000228180322       READ ACTMP1;
+000229180322       ENDDO;
+000230180322       IF %EOF(ACTMP1);
+000231180322         EXSR L1;
+000232180322       ENDIF;
+000233180322       *INLR = '1';
+000234180322
+000235180322       End-Proc;
+000236180322
+000237180322       Dcl-Proc DATESandTHINGS;
+000238180322      //*************************************************************************************
+000239180322       Dcl-S DaysInYear      Packed(5:2)   INZ(365.25);
+000240180322       Dcl-S JGREG           Packed(12:9);
+000241180322       Dcl-S J$YYWK          Packed(3:0);
+000242180322       Dcl-S J$TST           Packed(9:9);
+000243180322
+>>>>>>> branch 'master' of https://github.com/lynn9787/CentralParkData.git
 000244180322
 000245180322
 000246180322     C*     J$JD          DIV       365.25        J$YYWK            3 0
