@@ -3,6 +3,7 @@
 000300180322       Dcl-S Date            Date            Inz(*SYS);
 000400180322       // Changes made
 000500< HEAD
+                   // need this line to show in RDI
 000600180322       //new changes
 000601180322       //new line
 000700180322       // ===========================================
