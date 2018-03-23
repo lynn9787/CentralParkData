@@ -11,7 +11,7 @@
 000112180323
 000113180323       Dcl-S @dateA    date          inz(D'2004-12-04');
 000114180323       //change in new branch
-                   // testing the murge feature 
+                   // testing the merge feature 
 000116180323       Dcl-S @numA     Packed(6:0)   inz(041205);
 000117180323       Dcl-S @numB     Packed(7:0)   inz(1041206);
 000118180323       Dcl-S @numC     Packed(8:0)   inz(20041207);
